@@ -1,0 +1,15 @@
+function bloomFilter = addToBloomFilter(bloomFilter, item, hashFunctions)
+    %number of hash functions
+    k = length(hashFunctions);
+    item = char();
+    % Loop through each hash function
+    for i = 1:k
+        % Compute the hash value for the item using the i-th hash function
+        hashValue = hashFunctions{i}(item);
+        % Convert the hash value to a valid index within the Bloom filter size
+        index = mod(hashValue, length(bloomFilter)) + 1;  % +1 for 1-based indexing in MATLAB
+        
+        % Set the bit at the computed index to 1
+        bloomFilter(index) = true;
+    end
+end
